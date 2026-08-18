@@ -1,0 +1,8 @@
+@Library('practice-shared-lib') _
+
+def config = [:]
+config.dockerHubUsername = 'selum'
+config.imageName = 'practice-lab-image'
+config.dockerCredentialsId = 'jenkins-lab'
+
+PracticePipelineDocker(config)
