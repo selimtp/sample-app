@@ -24,7 +24,6 @@ public class App {
     }
 
     /**
-     * Starts the HTTP server and returns it so callers can shut it down.
      * Package-private so tests can start it on an ephemeral port (port 0).
      */
     static HttpServer start(int port) throws IOException {
