@@ -13,21 +13,30 @@ public class App {
 
     private static final Logger LOGGER = Logger.getLogger(App.class.getName());
 
-    private static final int PORT = 5000;
+    private static final int DEFAULT_PORT = 5000;
 
     private App() {
         // Utility class, not meant to be instantiated.
     }
 
     public static void main(String[] args) throws IOException {
+        start(DEFAULT_PORT);
+    }
+
+    /**
+     * Starts the HTTP server and returns it so callers can shut it down.
+     * Package-private so tests can start it on an ephemeral port (port 0).
+     */
+    static HttpServer start(int port) throws IOException {
         // Binds to 0.0.0.0 so the container port is reachable from the host.
-        HttpServer server = HttpServer.create(new InetSocketAddress(PORT), 0);
+        HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
         server.createContext("/", App::handleRoot);
         server.createContext("/health", App::handleHealth);
         server.setExecutor(null);
         server.start();
 
-        LOGGER.info(() -> "Practice application is running on port " + PORT);
+        LOGGER.info(() -> "Practice application is running on port " + server.getAddress().getPort());
+        return server;
     }
 
     private static void handleRoot(HttpExchange exchange) throws IOException {
