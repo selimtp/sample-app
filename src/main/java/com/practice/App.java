@@ -7,14 +7,19 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.nio.charset.StandardCharsets;
+import java.util.logging.Logger;
 
 public class App {
 
+    private static final Logger LOGGER = Logger.getLogger(App.class.getName());
+
     private static final int PORT = 5000;
 
-    public static void main(String[] args) throws IOException {
-        int unused = 5;
+    private App() {
+        // Utility class, not meant to be instantiated.
+    }
 
+    public static void main(String[] args) throws IOException {
         // Binds to 0.0.0.0 so the container port is reachable from the host.
         HttpServer server = HttpServer.create(new InetSocketAddress(PORT), 0);
         server.createContext("/", App::handleRoot);
@@ -22,7 +27,7 @@ public class App {
         server.setExecutor(null);
         server.start();
 
-        System.out.println("Practice application is running on port " + PORT );
+        LOGGER.info(() -> "Practice application is running on port " + PORT);
     }
 
     private static void handleRoot(HttpExchange exchange) throws IOException {
