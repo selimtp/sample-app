@@ -12,15 +12,10 @@ config.integrationTestCommands = [
     develop: ["echo running e2e tests"]
 ]
 
-// Docker settings - if these are removed, the docker stages skip themselves
 config.dockerHubUsername = 'selum'
 config.imageName = 'practice-lab-image'
 config.dockerCredentialsId = 'jenkins-lab'
 config.containerName = 'practice-lab-container'
 config.appPort = 5000
-// Host used by the post-deploy health check. Defaults to host.docker.internal
-// because the container's port is published on the docker host, not inside the
-// Jenkins container. Set to 'localhost' if Jenkins runs directly on the host.
-// config.appHost = 'localhost'
 
 PracticePipelineFull(config)
